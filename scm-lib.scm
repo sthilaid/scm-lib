@@ -264,8 +264,15 @@
   (define data '())
   (define SMA 'N/A)
   (define current-mode #f)
+  (define max -inf.0)
+  (define min +inf.0)
+
+  (define (check-extremum! val)
+    (cond ((< val min) (set! min val)
+           (> val max) (set! max val))))
   
   (define (gather-init-data new-val)
+    (check-extremum! new-val)
     (set! data (cons new-val data))
     (set! SMA (average data))
     (if (>= (length data) bound)
@@ -273,15 +280,20 @@
     SMA)
   
   (define (sma-calculator new-val)
+    (check-extremum! new-val)
     (set! data (cons new-val (drop-right data 1)))
     (set! SMA (average data))
     SMA)
   
   (define (dispatcher . arg)
-    (if (not (pair? arg))
-        SMA
-        (current-mode (car arg))))
-
+    (cond
+     ((not (pair? arg))   SMA)
+     ((number? (car arg)) (current-mode (car arg)))
+     ((symbol? (car arg)) (case (car arg)
+                            ((min) min)
+                            ((max) max)
+                            (else SMA)))))
+  
   (set! current-mode gather-init-data)
   dispatcher)
 
