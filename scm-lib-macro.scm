@@ -33,6 +33,21 @@
 (define-macro (unless test . body)
   `(if ,test #!void (begin ,@body)))
 
+(define-macro (currify f arrity)
+  (define (fold-l f acc list)
+    (if (not (pair? list))
+        acc
+        (fold-l f (f acc (car list)) (cdr list))))
+  (define (create-list number thunk)
+    (let loop ((n number) (acc '()))
+      (if (> n 0)
+          (loop (- n 1) (cons (thunk) acc))
+          acc)))
+  (let ((args (create-list arrity gensym)))
+   (fold-l (lambda (acc arg) `(lambda (,arg) ,acc))
+           `(,f ,@args)
+           args)))
+
 
 (define-macro (cast-pointer in-type out-type value)
   `((c-lambda (,in-type) ,out-type
