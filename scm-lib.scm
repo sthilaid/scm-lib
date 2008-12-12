@@ -49,9 +49,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;; High Order Functions ;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (flip f x)
-  (lambda (y)
-    (f y x)))
+  (lambda (y) (f y x)))
 
+(define (curry-flip f)
+  (lambda (x) (lambda (y) ((f y) x))))
 
 ;;;;;;;;;;;;;;;;;;;;;;; list operations ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -452,6 +453,11 @@
 
 (define (set-element? comp elem set)
   (generic-member comp elem set))
+
+(define (list->set comp list)
+  (fold-l (lambda (set el) (set-add comp el set))
+          (empty-set)
+          list))
 
 ;; Randomize current mrg's seed
 (random-source-randomize! default-random-source)
