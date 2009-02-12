@@ -459,7 +459,7 @@
 (define (queue-rfoldl f acc q)
   (queue-abstract-foldl queue-elem-next f acc (queue-tail q)))
 
-(deifne (queue->list q) (queue-foldl rcons '() q))
+(define (queue->list q) (queue-foldl rcons '() q))
 
 (define (queue-find-and-remove! pred q)
   (define (find-n-rem it pred el)
