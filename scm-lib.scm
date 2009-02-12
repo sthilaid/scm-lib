@@ -459,6 +459,8 @@
 (define (queue-rfoldl f acc q)
   (queue-abstract-foldl queue-elem-next f acc (queue-tail q)))
 
+(deifne (queue->list q) (queue-foldl rcons '() q))
+
 (define (queue-find-and-remove! pred q)
   (define (find-n-rem it pred el)
    (cond
@@ -477,7 +479,11 @@
        val))
     (else (find-n-rem it pred (it el)))))
 
-  (find-n-rem queue-elem-prev pred (queue-head q)))
+  (if (> (queue-size q) 0)
+      (find-n-rem queue-elem-prev pred (queue-head q))
+      #f))
+
+
 
 
 ;;; Sets
