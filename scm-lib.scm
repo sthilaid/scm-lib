@@ -407,8 +407,8 @@
 
 
 ;;; Queue implementation
-(define-type queue head tail size)
-(define-type queue-elem prev next value)
+(define-type queue id: queue head tail size)
+(define-type queue-elem id: queue-elem prev next value)
 (define (new-queue) (make-queue #f #f 0))
 
 (define (enqueue! q val)
