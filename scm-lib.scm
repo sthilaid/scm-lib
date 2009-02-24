@@ -114,6 +114,14 @@
    ((pred (car list)) (car list))
    (else  (exists pred (cdr list)))))
 
+;; returns the first result of the application of pred to a list
+;; element that is not #f.
+(define (find-value pred list)
+  (cond
+   ((not (pair? list)) #f)
+   ((pred (car list)) => (lambda (x) x))
+   (else  (exists pred (cdr list)))))
+
 (define (forall pred list)
   (cond
    ((not (pair? list)) #t)
