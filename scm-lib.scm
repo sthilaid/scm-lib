@@ -446,6 +446,11 @@
         (queue-size-set! q (1- (queue-size q)))
         val)))))
 
+(define (queue-peek q)
+  (if (zero? (queue-size q))
+      #f
+      (queue-elem-value (queue-head q))))
+
 
 (define (queue-push! q val)
   (if (empty-queue? q)
