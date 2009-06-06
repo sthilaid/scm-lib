@@ -531,7 +531,34 @@
 (define (make-set . values)
   (list->set eq? values))
 
-;; Randomize current mrg's seed
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Using the usual terminology: m rows by n columns
+(define (make-matrix2d-with-index m n #!optional (init-value (lambda (i j) 0)))
+  (include "scm-lib-macro.scm")
+  (let ((row-container (make-vector m)))
+    (for i 0 (< i m)
+         (let ((row-vector (make-vector n)))
+           (for j 0 (< j n) (vector-set! row-vector j (init-value i j)))
+           (vector-set! row-container i row-vector)))
+    row-container))
+
+(define (make-matrix2d m n #!optional (init-value 0))
+  (make-matrix2d-with-index m n (lambda (i j) init-value)))
+
+(define (matrix2d-set! mat i j value)
+  (vector-set! (vector-ref mat i) j value))
+
+(define (matrix2d-get mat i j)
+  (vector-ref (vector-ref mat i) j))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; RNG seed randomization, !! must be at the end of this file !!
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Randomize current rng's seed
 (random-source-randomize! default-random-source)
-
-
