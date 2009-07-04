@@ -54,6 +54,8 @@
 (define (curry-flip f)
   (lambda (x) (lambda (y) ((f y) x))))
 
+(define (identity . args) (values args))
+
 ;;;;;;;;;;;;;;;;;;;;;;; list operations ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (create-list number thunk)
