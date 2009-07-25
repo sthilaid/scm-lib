@@ -68,6 +68,11 @@
 
 (define (identity x) x)
 
+(define (compose f . gs)
+  (lambda (x) (fold-l (lambda (acc f) (f acc))
+                      x
+                      (reverse (cons f gs)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;; list operations ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (create-list number thunk)
