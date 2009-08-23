@@ -297,6 +297,8 @@
 (define (1- x) (- x 1))
 (define (one? x) (eq? x 1))
 
+(define (clamp min-value max-value n) (max min-value (min max-value n)))
+
 (define (exactisize n)
   (inexact->exact (floor n)))
 
