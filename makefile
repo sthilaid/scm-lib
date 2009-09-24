@@ -1,4 +1,4 @@
-PREFIX='.'
+PREFIX=.
 INCLUDE_PATH=$(PREFIX)/include
 LIB_PATH=$(PREFIX)/lib
 
