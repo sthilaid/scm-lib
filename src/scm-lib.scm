@@ -597,7 +597,7 @@
 
 ;; Using the usual terminology: m rows by n columns
 (define (make-matrix2d-with-index m n #!optional (init-value (lambda (i j) 0)))
-  (include "scm-lib-macro.scm")
+  (include "../include/scm-lib_.scm")
   (let ((row-container (make-vector m)))
     (for i 0 (< i m)
          (let ((row-vector (make-vector n)))
